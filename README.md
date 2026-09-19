@@ -4,12 +4,12 @@ Baseline ticket triage service for a financial services complaints desk, plus th
 
 ## Team
 | Name | Student ID |
-|---|---|---|
-| TOH ZHENGDA||
-| AROKKIASAMY LIANDOMAXIN| | 
-| LIN YUHAO| | 
-| BRYAN KOH KAI XUN| | 
-| BRYCE TEOH YI| 2401073 | 
+|---|---|
+| TOH ZHENGDA | |
+| AROKKIASAMY LIANDOMAXIN | |
+| LIN YUHAO | |
+| BRYAN KOH KAI XUN | |
+| BRYCE TEOH YI | 2401073 |
 
 ## System overview
 ```
