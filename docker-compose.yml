@@ -1,0 +1,26 @@
+services:
+  ollama:
+    image: ollama/ollama:latest      # CPU only: no GPU settings on purpose
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+
+  triage:
+    build: ./service
+    ports:
+      - "8000:8000"
+    environment:
+      OLLAMA_URL: http://ollama:11434
+      MODEL: ${MODEL:-llama3.2:1b}   # override: MODEL=qwen2.5:1.5b docker compose up -d
+      DB_PATH: /data/tickets.db
+      LOG_PATH: /app/logs/requests.log
+    volumes:
+      - triage_data:/data
+      - ./results/logs:/app/logs
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_models:
+  triage_data:
