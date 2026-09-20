@@ -18,25 +18,25 @@ The final thresholds must be frozen before official benchmark testing begins.
 
 ## Draft Requirements
 
-These are placeholders until the workload model is finalised.
+These thresholds are draft requirements derived from the workload model. They should be reviewed with the Performance Testing Lead before the official benchmark run.
 
 | ID | Area | Requirement | Measurement Source | Status |
 |---|---|---|---|---|
-| R1 | `POST /tickets` latency | At peak workload of X tickets/minute, p95 latency should be <= Y seconds with error rate <= Z%. | JMeter `.jtl` files and service logs | Pending thresholds |
-| R2 | Sustained throughput | The system should sustain at least X classified tickets/hour under peak workload without unbounded queue growth and with error rate <= Z%. | JMeter throughput, error rate, and service logs | Pending thresholds |
-| R3 | `GET /search` latency | Under mixed workload of X% `POST /tickets` and Y% `GET /search`, p95 search latency should be <= Z seconds. | JMeter `.jtl` files and service logs | Pending endpoint mix |
-| R4 | Overall accuracy | The selected model should achieve at least X% overall accuracy on the frozen golden set. | Accuracy test output and golden labels | Pending threshold |
-| R5 | Per-category accuracy | The selected model should achieve at least X% accuracy in each category, or any category below threshold must be identified as a routing risk. | Accuracy test output and golden labels | Pending threshold |
+| R1 | `POST /tickets` latency | At peak workload of 9 tickets/hour, p95 latency should be <= 60 seconds with error rate <= 1%. | JMeter `.jtl` files and service logs | Draft |
+| R2 | Sustained throughput | The system should sustain at least 9 classified tickets/hour under peak workload for the full test duration without unbounded queue growth and with error rate <= 1%. | JMeter throughput, error rate, and service logs | Draft |
+| R3 | `GET /search` latency | Under peak mixed workload of 9 `POST /tickets` per hour and 2 `GET /search` requests per hour, p95 search latency should be <= 2 seconds. | JMeter `.jtl` files and service logs | Draft |
+| R4 | Overall accuracy | The selected model should achieve at least 75% overall accuracy on the frozen golden set. | Accuracy test output and golden labels | Draft |
+| R5 | Per-category accuracy | The selected model should achieve at least 60% accuracy in each category, or any category below threshold must be identified as a routing risk. | Accuracy test output and golden labels | Draft |
 
 ## Requirement Rationale To Complete
 
 | Requirement | Rationale Needed |
 |---|---|
-| R1 | Human-facing complaint intake should not be delayed beyond an acceptable routing wait. |
-| R2 | Peak complaint intake must be handled without falling behind. |
-| R3 | Staff should be able to find routed tickets while classification load is running. |
-| R4 | Overall automation quality must be high enough to justify replacing manual first-pass routing. |
-| R5 | Category-level weakness matters because some teams may receive a disproportionate number of misrouted tickets. |
+| R1 | CPU-only local LLM inference may be slow, but complaint routing is asynchronous from the consumer's point of view. A 60-second p95 target is a practical upper bound for first-pass routing without promising real-time chat latency. |
+| R2 | Peak complaint intake must be handled without falling behind. The 9 tickets/hour target comes from the workload model's 3x peak-hour estimate. |
+| R3 | Staff should be able to find routed tickets while classification load is running. Search is expected to be much lighter than classification and should remain interactive. |
+| R4 | Overall automation quality must be high enough to justify replacing manual first-pass routing. 75% is a moderate baseline for a CPU-only model selection exercise and should still expose trade-offs between candidates. |
+| R5 | Category-level weakness matters because some teams may receive a disproportionate number of misrouted tickets. A lower per-category threshold allows for difficult categories while still flagging routing risk. |
 
 ## Result Interpretation Template
 

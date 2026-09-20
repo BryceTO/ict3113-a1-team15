@@ -61,19 +61,57 @@ JMeter test conditions should be expressed as controlled open-loop arrival rates
 
 | ID | Assumption | Status |
 |---|---|---|
-| A1 | Business hours used for converting daily complaint volume into hourly arrival rate | Pending source or team decision |
-| A2 | Percentage of complaints arriving during business hours | Pending source or conservative estimate |
-| A3 | Peak-hour multiplier over average business-hour rate | Pending source or conservative estimate |
-| A4 | Staff search rate per classified ticket | Pending source or conservative estimate |
-| A5 | Acceptable operational risk for misrouted complaints | Pending team decision |
+| A1 | 250 business days/year and 8 business hours/day | Draft |
+| A2 | Client workload model uses 10x mean CFPB company-forwarded complaint volume | Draft |
+| A3 | 70% of tickets arrive during business hours | Draft |
+| A4 | Peak hour is 3x average business-hour rate | Draft |
+| A5 | Staff make one search per five classified tickets | Draft |
+| A6 | Acceptable misrouting risk is represented by overall and per-category accuracy thresholds | Pending team decision |
+
+## Public Workload Evidence
+
+The strongest public source for this workload is the CFPB's 2024 Consumer Response Annual Report. CFPB reported about 3,187,900 complaints received in 2024, with more than 2.8 million sent to more than 3,600 companies for review and response. CFPB also reported that 98% of complaints were submitted through its website, supporting the assignment's assumption that tickets arrive digitally one at a time.
+
+For a company-level model, this plan uses the complaints sent to companies rather than all complaints received:
+
+```text
+Mean company-forwarded complaints/year = 2,829,400 / 3,600
+                                      ~= 786 complaints/company/year
+```
+
+The assignment client is described as having a steady complaint stream. To avoid modelling an unrealistically quiet average company, Bryan's draft model treats the client as a busier financial services company at 10x this simple mean:
+
+```text
+Draft client annual tickets = 786 * 10
+                            ~= 7,860 tickets/year
+```
+
+This is an assumption, not a direct public figure. It should be presented as a scaled workload model derived from CFPB volume.
+
+## Draft Workload Calculations
+
+Using 7,860 tickets/year:
+
+| Metric | Formula | Draft Value |
+|---|---|---:|
+| Tickets/business day | 7,860 / 250 | 31.4 tickets/day |
+| Tickets during business hours/day | 31.4 * 70% | 22.0 tickets/day |
+| Average business-hour intake | 22.0 / 8 | 2.75 tickets/hour |
+| Average business-hour intake | 2.75 / 60 | 0.046 tickets/minute |
+| Peak intake | 2.75 * 3 | 8.25 tickets/hour |
+| Peak intake | 8.25 / 60 | 0.138 tickets/minute |
+| Staff search rate at peak | 8.25 / 5 | 1.65 searches/hour |
+
+The raw peak rate is low because real financial complaints are usually sparse compared with web traffic. For performance testing, the team should still test higher stretch and stress arrival rates to find the system limit, but the formal client requirement should remain tied to the workload model.
 
 ## Draft Load Scenarios
 
 | Scenario | Purpose | Arrival Rate | Endpoint Mix | Status |
 |---|---|---:|---|---|
-| Normal load | Typical complaint intake | TBD | Mostly `POST /tickets` | Pending research |
-| Peak load | Main requirement condition | TBD | `POST /tickets` plus `GET /search` | Pending research |
-| Stress load | Find system limit | TBD | Increased `POST /tickets` | Performance Lead to finalise |
+| Normal load | Typical complaint intake | 3 `POST /tickets` per hour | Mostly `POST /tickets` | Draft |
+| Peak load | Main requirement condition | 9 `POST /tickets` per hour plus 2 searches/hour | `POST /tickets` plus `GET /search` | Draft |
+| Stretch load | Demonstrate headroom above modelled peak | 60 `POST /tickets` per hour plus 12 searches/hour | Same mix as peak | Draft, coordinate with Performance Lead |
+| Stress load | Find system limit | Increase until latency grows without bound or errors rise materially | Increased `POST /tickets` | Performance Lead to finalise |
 
 ## Slide 3 Notes
 
