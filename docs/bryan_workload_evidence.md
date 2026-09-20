@@ -1,0 +1,31 @@
+# Bryan Workload Evidence Index
+
+This file tracks the artefacts owned by the Workload & Requirements Lead.
+
+## Scope
+
+Bryan owns the workload model, the requirements derived from it, and the final pass/fail interpretation of measured results against those requirements.
+
+## Tracked Artefacts
+
+| Artefact | Purpose | Status |
+|---|---|---|
+| `docs/workload_model.md` | Client workload model for Slide 3 | Draft |
+| `docs/requirements.md` | Testable performance and accuracy requirements for Slide 4 | Draft |
+| `docs/references.md` | Sources and assumptions used by Bryan | Draft |
+| `analysis/ticket_length_distribution.csv` | Computed ticket length percentiles from Team 15 rows | Pending |
+| `analysis/workload_calculations.csv` | Workload-to-arrival-rate calculations | Pending |
+
+## Local Inputs
+
+The raw assignment context and source extracts are kept in `context/`, which is ignored by Git. Calculations should read from local context files but commit only derived summaries, scripts, and slide-ready evidence.
+
+Current local context used:
+
+- `context/ICT3113_Assignment_1.docx`
+- `context/team15_rows.csv`
+- `context/plan.md`
+
+## Freeze Rule
+
+Before official benchmark testing starts, the final workload model and requirements must be committed. After that point, only result interpretation should change.
