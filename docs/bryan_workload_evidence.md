@@ -21,6 +21,7 @@ Bryan owns the workload model, the requirements derived from it, and the final p
 | `analysis/load_scenarios.csv` | Normal, peak, stretch, and stress load scenarios | Complete |
 | `analysis/requirements_traceability.csv` | Requirement thresholds mapped to load condition and evidence | Complete |
 | `analysis/requirements_traceability.md` | Slide-friendly requirement traceability table | Complete |
+| `docs/workload_requirements_coordination.md` | Coordination checklist for other leads | Complete |
 | `scripts/analyze_ticket_lengths.py` | Reproducible script for ticket length summaries | Complete |
 | `scripts/calculate_workload_rates.py` | Reproducible script for workload-to-load calculations | Complete |
 
