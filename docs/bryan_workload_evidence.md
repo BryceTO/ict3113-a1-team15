@@ -16,8 +16,11 @@ Bryan owns the workload model, the requirements derived from it, and the final p
 | `analysis/ticket_length_distribution.csv` | Computed ticket length percentiles from Team 15 rows | Complete |
 | `analysis/ticket_length_distribution.md` | Slide-friendly ticket length summary | Complete |
 | `analysis/source_label_distribution.csv` | Raw source-label distribution for Team 15 rows | Complete |
-| `analysis/workload_calculations.csv` | Workload-to-arrival-rate calculations | Pending |
+| `analysis/workload_calculations.csv` | Workload-to-arrival-rate calculations | Complete |
+| `analysis/workload_calculations.md` | Slide-friendly workload calculation summary | Complete |
+| `analysis/load_scenarios.csv` | Normal, peak, stretch, and stress load scenarios | Complete |
 | `scripts/analyze_ticket_lengths.py` | Reproducible script for ticket length summaries | Complete |
+| `scripts/calculate_workload_rates.py` | Reproducible script for workload-to-load calculations | Complete |
 
 ## Local Inputs
 
