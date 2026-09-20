@@ -30,6 +30,8 @@ Local dataset summary from `context/team15_rows.csv`:
 | Total tickets | 1,000 |
 | Minimum narrative length | 201 characters |
 | Mean narrative length | about 879 characters |
+| Median narrative length | 795 characters |
+| p95 narrative length | about 1,750 characters |
 | Maximum narrative length | 1,989 characters |
 
 Raw source label distribution:
@@ -45,6 +47,18 @@ Raw source label distribution:
 | Consumer loan | 127 |
 
 These raw source labels are useful for describing the dataset slice, but they are noisy and must not replace the team-adjudicated golden labels for accuracy measurement.
+
+### Ticket Length Distribution
+
+Derived from `context/team15_rows.csv` using `scripts/analyze_ticket_lengths.py`.
+
+| Metric | Mean | Min | p25 | Median | p75 | p90 | p95 | p99 | Max |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Characters | 879.24 | 201 | 489 | 795 | 1,216 | 1,604 | 1,750 | 1,918 | 1,989 |
+| Words | 156.47 | 1 | 90 | 140 | 215 | 284 | 311 | 358 | 374 |
+| Estimated tokens | 220.19 | 51 | 123 | 199 | 304 | 401 | 438 | 480 | 498 |
+
+For Slide 3, the most useful summary is: Team 15 complaint narratives are usually short to medium-length inputs, with median length about 795 characters and p95 length about 1,750 characters. This supports CPU-only testing because the prompt size is bounded, but classification can still be slow because every `POST /tickets` request waits synchronously for the model.
 
 ## Modelling Units
 
