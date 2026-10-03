@@ -1,14 +1,17 @@
 """Baseline ticket triage service (Assignment 1).
-Deliberately simple: synchronous classification, no caching, no queue."""
+Deliberately simple: synchronous classification, no caching, no queue.
+Instrumentation patch: every request logged via middleware, Ollama timing fields,
+RUN_ID per log line, explicit num_ctx / keep_alive, optional row_id for traceability."""
 import json
 import logging
 import os
 import sqlite3
 import time
 import uuid
+from datetime import datetime, timezone
 
 import requests
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from pydantic import BaseModel
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://ollama:11434")
@@ -16,6 +19,9 @@ MODEL = os.getenv("MODEL", "llama3.2:1b")
 DB_PATH = os.getenv("DB_PATH", "/data/tickets.db")
 LOG_PATH = os.getenv("LOG_PATH", "/app/logs/requests.log")
 OLLAMA_TIMEOUT = float(os.getenv("OLLAMA_TIMEOUT", "300"))
+RUN_ID = os.getenv("RUN_ID", "dev")                 # set per run, e.g. llama3.2-1b_r2_run1
+NUM_CTX = int(os.getenv("NUM_CTX", "4096"))         # keep identical across candidates
+KEEP_ALIVE = os.getenv("KEEP_ALIVE", "30m")         # avoid mid-run model unloads
 
 CATEGORIES = [
     "Credit reporting",
@@ -45,7 +51,8 @@ req_log.addHandler(_h)
 
 
 def log_request(**fields):
-    fields["ts"] = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime()) + f".{int(time.time()*1000)%1000:03d}Z"
+    fields["ts"] = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+    fields["run_id"] = RUN_ID
     req_log.info(json.dumps(fields))
 
 
@@ -74,8 +81,32 @@ with db() as c:
 app = FastAPI(title="Ticket Triage Service (baseline)")
 
 
+@app.middleware("http")
+async def log_all_requests(request: Request, call_next):
+    """Logs EVERY request (incl. validation 422s and unhandled 500s).
+    Endpoints add extra fields via request.state.extra."""
+    start = time.perf_counter()
+    request.state.rid = str(uuid.uuid4())
+    request.state.extra = {}
+    status = 500
+    try:
+        response = await call_next(request)
+        status = response.status_code
+        response.headers["X-Request-ID"] = request.state.rid
+        return response
+    finally:
+        log_request(
+            request_id=request.state.rid,
+            endpoint=f"{request.method} {request.url.path}",
+            status=status,
+            latency_ms=round((time.perf_counter() - start) * 1000, 1),
+            **request.state.extra,
+        )
+
+
 class TicketIn(BaseModel):
     narrative: str
+    row_id: int | None = None   # optional: dataset row number, logged only (not used to classify)
 
 
 def match_category(text: str) -> str:
@@ -83,18 +114,19 @@ def match_category(text: str) -> str:
     for c in CATEGORIES:
         if t == c.lower():
             return c
-    for c in CATEGORIES:  # model added extra words: take first category mentioned
-        if c.lower() in t:
-            return c
-    return "Unclassified"
+    # model added extra words: take the category mentioned EARLIEST in the output
+    hits = [(t.find(c.lower()), c) for c in CATEGORIES if c.lower() in t]
+    return min(hits)[1] if hits else "Unclassified"
 
 
 @app.post("/tickets")
-def create_ticket(ticket: TicketIn):
-    rid = str(uuid.uuid4())
-    start = time.perf_counter()
+def create_ticket(ticket: TicketIn, request: Request):
+    rid = request.state.rid
+    extra = request.state.extra
+    if ticket.row_id is not None:
+        extra["row_id"] = ticket.row_id
     if not ticket.narrative.strip():
-        log_request(request_id=rid, endpoint="POST /tickets", status=422, error="empty narrative")
+        extra["error"] = "empty narrative"
         raise HTTPException(422, "narrative must not be empty")
     try:
         t0 = time.perf_counter()
@@ -104,18 +136,26 @@ def create_ticket(ticket: TicketIn):
                 "model": MODEL,
                 "prompt": PROMPT.format(narrative=ticket.narrative),
                 "stream": False,
-                "options": {"temperature": 0, "num_predict": 16},
+                "keep_alive": KEEP_ALIVE,
+                "options": {"temperature": 0, "num_predict": 16, "num_ctx": NUM_CTX},
             },
             timeout=OLLAMA_TIMEOUT,
         )
         r.raise_for_status()
         ollama_ms = (time.perf_counter() - t0) * 1000
-        raw = r.json().get("response", "")
-    except Exception as e:
-        log_request(
-            request_id=rid, endpoint="POST /tickets", model=MODEL, status=502,
-            latency_ms=round((time.perf_counter() - start) * 1000, 1), error=str(e)[:200],
+        body = r.json()
+        raw = body.get("response", "")
+        extra.update(
+            model=MODEL,
+            ollama_ms=round(ollama_ms, 1),
+            # Ollama's own timings are in nanoseconds
+            ollama_total_ns=body.get("total_duration"),
+            ollama_load_ns=body.get("load_duration"),
+            prompt_eval_count=body.get("prompt_eval_count"),
+            eval_count=body.get("eval_count"),
         )
+    except Exception as e:
+        extra.update(model=MODEL, error=str(e)[:200])
         raise HTTPException(502, f"model backend error: {e}")
 
     category = match_category(raw)
@@ -124,37 +164,23 @@ def create_ticket(ticket: TicketIn):
             "INSERT INTO tickets VALUES (?,?,?,?,?,datetime('now'))",
             (rid, ticket.narrative, category, raw, MODEL),
         )
-    latency_ms = (time.perf_counter() - start) * 1000
-    log_request(
-        request_id=rid, endpoint="POST /tickets", model=MODEL, status=200,
-        latency_ms=round(latency_ms, 1), ollama_ms=round(ollama_ms, 1),
-        category=category, narrative_chars=len(ticket.narrative),
-    )
+    extra.update(category=category, narrative_chars=len(ticket.narrative))
     return {"id": rid, "category": category}
 
 
 @app.get("/search")
-def search(q: str = Query(..., min_length=1)):
-    start = time.perf_counter()
+def search(request: Request, q: str = Query(..., min_length=1)):
     with db() as c:
         rows = c.execute(
             "SELECT id, narrative, category FROM tickets WHERE narrative LIKE ? LIMIT 100",
             (f"%{q}%",),
         ).fetchall()
-    log_request(
-        endpoint="GET /search", status=200, results=len(rows),
-        latency_ms=round((time.perf_counter() - start) * 1000, 1),
-    )
+    request.state.extra.update(results=len(rows))
     return {"query": q, "count": len(rows), "results": [dict(r) for r in rows]}
 
 
 @app.get("/stats")
 def stats():
-    start = time.perf_counter()
     with db() as c:
         rows = c.execute("SELECT category, COUNT(*) n FROM tickets GROUP BY category").fetchall()
-    log_request(
-        endpoint="GET /stats", status=200,
-        latency_ms=round((time.perf_counter() - start) * 1000, 1),
-    )
     return {r["category"]: r["n"] for r in rows}

@@ -1,23 +1,32 @@
 services:
   ollama:
-    image: ollama/ollama:latest      # CPU only: no GPU settings on purpose
+    image: ollama/ollama:${OLLAMA_VERSION:-0.35.0}   # pinned; record this version with results
     ports:
-      - "11434:11434"
+      - "127.0.0.1:11434:11434"      # local only; the load generator only needs 8000
     volumes:
       - ollama_models:/root/.ollama
- 
+    environment:
+      OLLAMA_NUM_PARALLEL: 1         # one inference at a time: sequential baseline
+      OLLAMA_MAX_QUEUE: 512          # Ollama default, stated explicitly
+    # CPU only: no GPU settings on purpose
+
   triage:
     build: ./service
     ports:
       - "8000:8000"
     environment:
-      MODEL: ${MODEL:-llama3.2:1b}   # override: set MODEL before docker compose up -d
+      MODEL: ${MODEL:-llama3.2:1b}
+      RUN_ID: ${RUN_ID:-dev}
+      NUM_CTX: ${NUM_CTX:-4096}
+      KEEP_ALIVE: ${KEEP_ALIVE:-30m}
+      DB_PATH: /data/${RUN_ID:-dev}.db            # fresh DB per run
+      LOG_PATH: /app/logs/${RUN_ID:-dev}.log      # one log per run
     volumes:
       - triage_data:/data
       - ./results/logs:/app/logs
     depends_on:
       - ollama
- 
+
 volumes:
   ollama_models:
   triage_data:
