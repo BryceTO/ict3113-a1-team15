@@ -6,7 +6,7 @@ The AI-assisted draft is `data/labels/bryan_first_pass_draft.csv`. It contains 7
 
 The assigned IDs were **inferred**, not supplied as a separate Yuhao packet. The shared team plan allocates the first 175 Team 15 rows in consecutive pair blocks. Bryce's sheet confirms `A+B` = 15000-15017, `E+A` = 15072-15089, `A+C` = 15090-15106, and `A+D` = 15107-15123. Continuing those blocks gives Bryan `B+C` = 15018-15035, `B+D` = 15124-15140, and `B+E` = 15141-15157. Yuhao should confirm this allocation against the master sheet before treating the labels as final input.
 
-There is no team labelling protocol in this checkout. The draft uses the seven categories in the repository README. Bryan should review every narrative and suggested category himself against Yuhao's protocol, edit decisions where needed, and then submit his verified independent sheet. Student-loan cases were placed under `Consumer loan` because the seven-category taxonomy has no student-loan class; this rule needs protocol confirmation.
+Bryan confirmed the only permitted labels are `Credit reporting`, `Debt collection`, `Mortgage`, `Credit card`, `Bank account or service`, `Consumer loan`, and `Money transfer or service`. All 70 draft labels use these exact names. There is still no team tie-breaking protocol in this checkout. Bryan should review every narrative and suggested category himself against Yuhao's protocol, edit decisions where needed, and then submit his verified independent sheet. Student-loan cases were placed under `Consumer loan` because the seven-category taxonomy has no student-loan class; this rule needs protocol confirmation.
 
 ## For Yuhao
 
