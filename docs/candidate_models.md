@@ -16,11 +16,11 @@ All three models were pulled and verified locally using Ollama 0.40.0 on the tea
 
 ## Candidate Set
 
-| Model | Exact Ollama tag | Local model ID / digest | Local size | Size class | Licence | Selection rationale |
+| Model | Exact Ollama tag | Digest | Local size | Size class | Licence | Selection rationale |
 |---|---|---|---:|---|---|---|
-| Llama 3.2 1B | `llama3.2:1b` | `baf6a787fdff` | 1.3 GB | Small | Llama 3.2 Community License Agreement | Smallest baseline. Selected to represent a low-resource, speed-first CPU model and show the lower end of the accuracy/performance trade-off. |
-| Gemma 3 4B | `gemma3:4b` | `a2af6cc3eb7f` | 3.3 GB | Medium | Gemma Terms of Use | Mid-sized candidate. Selected to represent a balance between classification quality and CPU inference cost. |
-| Mistral 7B Instruct | `mistral:7b-instruct` | `6577803aa9a0` | 4.4 GB | Larger | Apache License 2.0 | Largest candidate. Selected to test whether a larger instruction-tuned model provides enough accuracy improvement to justify higher CPU latency and lower throughput. |
+| Llama 3.2 1B | `llama3.2:1b` | `baf6a787fdffd633537aa2eb51cfd54cb93ff08e28040095462bb63daf552878` | 1.3 GB | Small | Llama 3.2 Community License Agreement | Smallest baseline. Selected to represent a low-resource, speed-first CPU model and show the lower end of the accuracy/performance trade-off. |
+| Gemma 3 4B | `gemma3:4b` | `a2af6cc3eb7fa8be8504abaf9b04e88f17a119ec3f04a3addf55f92841195f5a` | 3.3 GB | Medium | Gemma Terms of Use | Mid-sized candidate. Selected to represent a balance between classification quality and CPU inference cost. |
+| Mistral 7B Instruct | `mistral:7b-instruct` | `6577803aa9a036369e481d648a2baebb381ebc6e897f2bb9a766a2aa7bfbc1cf` | 4.4 GB | Larger | Apache License 2.0 | Largest candidate. Selected to test whether a larger instruction-tuned model provides enough accuracy improvement to justify higher CPU latency and lower throughput. |
 
 ## Why These Three Models
 
