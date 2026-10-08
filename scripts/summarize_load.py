@@ -4,7 +4,7 @@ For every results/jtl/<RUN_ID>.jtl it reads <RUN_ID>.meta.json (written by
 jmeter/run_load.ps1) and results/logs/<RUN_ID>.log (written by the service), then writes:
 
     results/summary/load_runs.csv        one row per run and endpoint
-    results/summary/load_configs.csv     mean and spread across the runs of a configuration
+    results/summary/load_configs.csv     mean and spread across the reconciled runs of a configuration
     results/summary/timeline/<RUN_ID>.csv   per-minute arrivals, completions, backlog, latency
     results/summary/stress_steps.csv     per-step figures for runs made with -StepRates
 
@@ -214,8 +214,11 @@ def main():
         raise SystemExit(f"no .jtl files with samples in {jtl_dir}")
 
     groups = defaultdict(list)
+    # a run that does not reconcile with its service log is kept on file but never averaged
+    unreconciled = sorted({r["run_id"] for r in run_rows if r["reconciled"] != "yes"})
     for row in run_rows:
-        groups[(row["config"], row["endpoint"])].append(row)
+        if row["run_id"] not in unreconciled:
+            groups[(row["config"], row["endpoint"])].append(row)
     config_rows = []
     for (config, endpoint), rows in groups.items():
         out = {"config": config, "endpoint": endpoint, "runs": len(rows), "all_reconciled": all(r["reconciled"] == "yes" for r in rows)}
@@ -237,6 +240,8 @@ def main():
     for r in run_rows:
         flag = r["reconciled"] + (f" ({r['notes']})" if r.get("notes") else "")
         print(f"| {r['run_id']} | {r['endpoint']} | {r['samples']} | {r['p50_ms']} | {r['p95_ms']} | {r['p99_ms']} | {r['throughput_per_min']} | {r['error_rate_pct']} | {flag} |")
+    for run_id in unreconciled:
+        print(f"EXCLUDED from load_configs.csv (not reconciled): {run_id}")
     for r in config_rows:
         if r["runs"] != 3:
             print(f"WARNING: {r['config']} [{r['endpoint']}] has {r['runs']} run(s); the brief requires 3.")
