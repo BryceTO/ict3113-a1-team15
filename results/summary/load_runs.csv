@@ -1,4 +1,10 @@
 run_id,config,endpoint,samples,errors,error_rate_pct,p50_ms,p95_ms,p99_ms,mean_ms,max_ms,throughput_per_min,reconciled,log_lines,notes,median_outside_service_ms,mean_ollama_ms,models,model_reloads,unclassified
+llama3.2-1b_high_run1,llama3.2-1b_high,POST /tickets,60,0,0.0,1674,3247,3957,1952.2,3957,2.996,yes,60,,174.8,1754.1,llama3.2:1b,0,0
+llama3.2-1b_high_run1,llama3.2-1b_high,GET /search,12,0,0.0,95,153,153,92.9,153,0.6,yes,12,,98.0,,,,
+llama3.2-1b_high_run2,llama3.2-1b_high,POST /tickets,60,0,0.0,1667,3273,3714,2006.2,3714,3.0,yes,60,,176.8,1815.9,llama3.2:1b,0,0
+llama3.2-1b_high_run2,llama3.2-1b_high,GET /search,12,0,0.0,52,143,143,81.1,143,0.6,yes,12,,57.8,,,,
+llama3.2-1b_high_run3,llama3.2-1b_high,POST /tickets,60,0,0.0,2864,7854,12051,3579.1,12051,2.991,yes,60,,204.0,3318.2,llama3.2:1b,0,0
+llama3.2-1b_high_run3,llama3.2-1b_high,GET /search,12,0,0.0,59,777,777,115.8,777,0.6,yes,12,,55.8,,,,
 llama3.2-1b_stretch_run1,llama3.2-1b_stretch,POST /tickets,20,3,15.0,1924,100173,100212,16772.3,100212,0.807,no,17,"log has 17 lines, jtl has 20 samples; 3 jtl samples have no matching request_id in the log",403.7,1540.2,llama3.2:1b,0,0
 llama3.2-1b_stretch_run1,llama3.2-1b_stretch,GET /search,4,0,0.0,393,425,425,383.8,425,0.2,yes,4,,404.3,,,,
 llama3.2-1b_stretch_run2,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1388,3091,3391,1648.0,3391,1.0,yes,20,,163.3,1450.4,llama3.2:1b,0,0
