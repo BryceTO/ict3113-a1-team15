@@ -1,0 +1,8 @@
+golden_label,Bank account or service,Consumer loan,Credit reporting,Mortgage
+Bank account or service,24,0,1,0
+Consumer loan,13,0,2,0
+Credit card,19,0,3,0
+Credit reporting,28,1,9,0
+Debt collection,19,0,1,0
+Money transfer or service,27,0,1,0
+Mortgage,23,1,2,1

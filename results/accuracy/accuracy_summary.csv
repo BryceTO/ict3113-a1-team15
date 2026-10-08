@@ -1,0 +1,4 @@
+model,total,successful,errors,error_rate_percent,correct,wrong,accuracy_successful_percent,end_to_end_correct_percent
+llama3.2:1b,175,175,0,0.0,34,141,19.43,19.43
+gemma3:4b,175,174,1,0.57,134,40,77.01,76.57
+mistral:7b-instruct,175,151,24,13.71,120,31,79.47,68.57

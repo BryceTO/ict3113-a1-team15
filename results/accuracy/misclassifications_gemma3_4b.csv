@@ -1,0 +1,18 @@
+golden_label,predicted_label,count
+Money transfer or service,Bank account or service,6
+Bank account or service,Credit card,5
+Consumer loan,Debt collection,4
+Consumer loan,Credit reporting,3
+Consumer loan,Credit card,3
+Debt collection,Credit reporting,3
+Money transfer or service,Credit card,3
+Credit reporting,Credit card,2
+Consumer loan,Bank account or service,2
+Money transfer or service,Debt collection,2
+Bank account or service,Money transfer or service,1
+Bank account or service,Mortgage,1
+Bank account or service,Credit reporting,1
+Debt collection,Credit card,1
+Debt collection,Bank account or service,1
+Credit reporting,Debt collection,1
+Mortgage,Consumer loan,1
