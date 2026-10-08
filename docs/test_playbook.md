@@ -16,7 +16,7 @@ This playbook covers the JMeter load tests and the stress test. The golden-set a
 | Role | Runs | Notes |
 |---|---|---|
 | Service host | Docker: triage service + Ollama (CPU only) | The same machine for every run |
-| Load generator | JMeter 5.6.3, Java 8 or later | A different physical machine. It reached the service over the Internet through a VS Code forwarded HTTPS port |
+| Load generator | JMeter 5.6.3, Java 8 or later | A different physical machine. It reached the service over the Internet through Tailscale |
 
 Details of each machine are in `docs/test_environment.md`.
 
@@ -26,14 +26,14 @@ On the service host:
 
 1. `docker compose up -d --build`
 2. `docker compose exec ollama ollama pull <model:tag>` for every candidate.
-3. In VS Code, forward port 8000 and set its visibility to Public. Note the forwarded address (`<name>-8000.<region>.devtunnels.ms`). Keep VS Code open for the whole session.
+3. Install Tailscale, sign in, and invite the load generator's user to the tailnet. Note the host's Tailscale address (`tailscale ip -4`). Allow inbound TCP 8000 through the firewall if asked.
 
 On the load generator:
 
 1. Clone the repository. Put the Team 15 extract (rows 15000 to 15999, columns `row,source_label,narrative`) at `context/team15_rows.csv`. This folder is git-ignored.
 2. `py scripts\make_feeder.py` writes `jmeter/feeder.tsv`: 1,000 lines, one ready-made JSON request body per ticket, in dataset order.
 3. Set `JMETER_HOME` to the JMeter folder, for example `$env:JMETER_HOME = "C:\Users\<you>\Downloads\apache-jmeter-5.6.3"`.
-4. Check the link: `Invoke-RestMethod https://<tunnel-host>/stats` in PowerShell. It must return JSON, not a sign-in page.
+4. Install Tailscale and join the service host's tailnet. Check the link: `tailscale status` must list the service host as `direct`, and `Invoke-RestMethod http://<service-host-ip>:8000/stats` must return JSON.
 
 ## 4. Test configurations
 
@@ -69,7 +69,7 @@ The run ID is `<model with ":" replaced by "-">_<scenario>_run<N>`, for example 
    ```
 2. **Load generator:** start the run.
    ```
-   .\jmeter\run_load.ps1 -TargetHost <tunnel-host> -Scheme https -Port 443 -Model llama3.2:1b -Scenario stretch -Run 1 -Rate 1 -SearchRate 0.2 -DurationMin 20
+   .\jmeter\run_load.ps1 -TargetHost <service-host-ip> -Model llama3.2:1b -Scenario stretch -Run 1 -Rate 1 -SearchRate 0.2 -DurationMin 20
    ```
    The script checks that `GET /stats` is empty, sends one warm-up ticket (row 15999) to load the model, records the warm-up's request ID, then runs JMeter.
 3. Do not touch either machine until JMeter prints `... end of run`.
@@ -86,7 +86,7 @@ Purpose: find the highest ticket arrival rate the baseline sustains before the q
 1. Start the service as in step 6.1 with `RUN_ID=<model>_stress_run1`.
 2. Run:
    ```
-   .\jmeter\run_load.ps1 -TargetHost <tunnel-host> -Scheme https -Port 443 -Model llama3.2:1b -Scenario stress -Run 1 -StepRates "2,4,6,8,10,12" -StepMin 10
+   .\jmeter\run_load.ps1 -TargetHost <service-host-ip> -Model llama3.2:1b -Scenario stress -Run 1 -StepRates "2,4,6,8,10,12" -StepMin 10
    ```
    The rate rises in steps with no pause between them. The list must be in quotes.
 3. Summarise as in step 6.5. Read `results/summary/stress_steps.csv` and `results/summary/timeline/<RUN_ID>.csv`.

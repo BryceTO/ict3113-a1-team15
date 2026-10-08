@@ -1,0 +1,9 @@
+run_id,config,endpoint,samples,errors,error_rate_pct,p50_ms,p95_ms,p99_ms,mean_ms,max_ms,throughput_per_min,reconciled,log_lines,notes,median_outside_service_ms,mean_ollama_ms,models,model_reloads,unclassified
+llama3.2-1b_stretch_run1,llama3.2-1b_stretch,POST /tickets,20,3,15.0,1924,100173,100212,16772.3,100212,0.807,no,17,"log has 17 lines, jtl has 20 samples; 3 jtl samples have no matching request_id in the log",403.7,1540.2,llama3.2:1b,0,0
+llama3.2-1b_stretch_run1,llama3.2-1b_stretch,GET /search,4,0,0.0,393,425,425,383.8,425,0.2,yes,4,,404.3,,,,
+llama3.2-1b_stretch_run2,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1388,3091,3391,1648.0,3391,1.0,yes,20,,163.3,1450.4,llama3.2:1b,0,0
+llama3.2-1b_stretch_run2,llama3.2-1b_stretch,GET /search,4,0,0.0,111,199,199,135.0,199,0.2,yes,4,,112.3,,,,
+llama3.2-1b_stretch_run3,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1417,3036,3468,1656.3,3468,0.998,yes,20,,172.3,1455.2,llama3.2:1b,0,0
+llama3.2-1b_stretch_run3,llama3.2-1b_stretch,GET /search,4,0,0.0,56,126,126,89.0,126,0.2,yes,4,,83.2,,,,
+llama3.2-1b_stretch_run4,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1430,3598,4395,1780.0,4395,1.0,yes,20,,166.9,1587.0,llama3.2:1b,0,0
+llama3.2-1b_stretch_run4,llama3.2-1b_stretch,GET /search,4,0,0.0,61,77,77,62.8,77,0.2,yes,4,,61.4,,,,

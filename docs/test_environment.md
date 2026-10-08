@@ -20,10 +20,11 @@ Fill every `TBD` before the first official run. Do not change either machine bet
 
 | Item | Value |
 |---|---|
-| Link between the machines | Over the Internet, through a VS Code forwarded port (Microsoft dev tunnel, public visibility). The two machines were on different networks |
-| Protocol seen by the load generator | HTTPS on port 443 at a `devtunnels.ms` address. The tunnel forwards to the service's HTTP port 8000 on the service host |
+| Link between the machines | Over the Internet, through Tailscale (a WireGuard VPN). The two machines were on different networks |
+| Path | Direct peer-to-peer, not through a Tailscale relay (`tailscale status` showed `direct`) |
+| Protocol seen by the load generator | Plain HTTP to the service host's Tailscale address on port 8000, the service's own port |
+| Round-trip time, load generator to service host | 25 ms mean, 10 ms minimum, 94 ms maximum, 0% loss (`ping`, 10 packets, before the first run) |
 | Network overhead per request | TBD ms: `median_outside_service_ms` in `results/summary/load_runs.csv`, which is JMeter's elapsed time minus the service's own logged latency |
-| Connections | Each request opens a new HTTPS connection, so every request pays a TLS handshake through the tunnel |
 
 ## Confirmations
 
@@ -36,9 +37,9 @@ Keep the ones that apply and add any others seen during testing.
 
 - The service host is a laptop, not a server: thermal throttling during long runs, and a mix of performance and efficiency cores if it has a hybrid CPU.
 - Docker Desktop runs containers inside a virtual machine, which limits the CPU and memory available to Ollama.
-- The tunnel adds Internet and relay delay to every request, and it varies. It is small next to model inference time but large next to `GET /search`, which takes milliseconds inside the service. A direct LAN connection would give lower and steadier latencies.
-- The tunnel is a third-party relay with its own limits. If it drops or times out a long-waiting request, JMeter records an error that the service log does not show. Any such run is flagged `reconciled = no` and must be explained as a tunnel effect, not a service failure.
-- The tunnel client runs inside VS Code on the service host and uses a small amount of its CPU.
+- The requests cross the public Internet between two home networks, so network delay varies (10 to 94 ms round trip when measured). It is small next to model inference time but large next to `GET /search`, which takes milliseconds inside the service. A LAN connection would give lower and steadier latencies.
+- Tailscale encrypts traffic on both machines, which uses a small amount of the service host's CPU.
+- The first attempt used a VS Code forwarded port (Microsoft dev tunnel) instead. That run, `llama3.2-1b_stretch_run1`, is kept but not reported: the tunnel returned `504 Gateway Timeout` after 100 seconds for 3 of 20 tickets that never reached the service, so it did not reconcile with the service log.
 - Background programs and operating system updates on either machine.
 - One service instance and one Ollama instance. The client may run several.
 
