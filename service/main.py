@@ -1,7 +1,9 @@
 """Baseline ticket triage service (Assignment 1).
 Deliberately simple: synchronous classification, no caching, no queue.
 Instrumentation patch: every request logged via middleware, Ollama timing fields,
-RUN_ID per log line, explicit num_ctx / keep_alive, optional row_id for traceability."""
+RUN_ID per log line, explicit num_ctx / keep_alive, optional row_id for traceability.
+Thinking-capable models (e.g. qwen3) are called with think=false so the short answer budget
+is not used up by reasoning text; non-thinking models are called exactly as before."""
 import json
 import logging
 import os
@@ -104,6 +106,21 @@ async def log_all_requests(request: Request, call_next):
         )
 
 
+_thinking_capable = None  # looked up once from Ollama /api/show (model metadata, not results)
+
+
+def model_can_think() -> bool:
+    global _thinking_capable
+    if _thinking_capable is None:
+        try:
+            r = requests.post(f"{OLLAMA_URL}/api/show", json={"model": MODEL}, timeout=30)
+            r.raise_for_status()
+            _thinking_capable = "thinking" in (r.json().get("capabilities") or [])
+        except Exception:
+            return False  # Ollama not ready yet: try again on the next request
+    return _thinking_capable
+
+
 class TicketIn(BaseModel):
     narrative: str
     row_id: int | None = None   # optional: dataset row number, logged only (not used to classify)
@@ -129,18 +146,18 @@ def create_ticket(ticket: TicketIn, request: Request):
         extra["error"] = "empty narrative"
         raise HTTPException(422, "narrative must not be empty")
     try:
+        payload = {
+            "model": MODEL,
+            "prompt": PROMPT.format(narrative=ticket.narrative),
+            "stream": False,
+            "keep_alive": KEEP_ALIVE,
+            "options": {"temperature": 0, "num_predict": 16, "num_ctx": NUM_CTX},
+        }
+        if model_can_think():
+            payload["think"] = False
+            extra["think"] = False
         t0 = time.perf_counter()
-        r = requests.post(
-            f"{OLLAMA_URL}/api/generate",
-            json={
-                "model": MODEL,
-                "prompt": PROMPT.format(narrative=ticket.narrative),
-                "stream": False,
-                "keep_alive": KEEP_ALIVE,
-                "options": {"temperature": 0, "num_predict": 16, "num_ctx": NUM_CTX},
-            },
-            timeout=OLLAMA_TIMEOUT,
-        )
+        r = requests.post(f"{OLLAMA_URL}/api/generate", json=payload, timeout=OLLAMA_TIMEOUT)
         r.raise_for_status()
         ollama_ms = (time.perf_counter() - t0) * 1000
         body = r.json()
