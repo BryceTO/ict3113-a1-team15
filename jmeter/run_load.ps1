@@ -26,6 +26,7 @@ param(
     [double]$SearchRate = 0,        # GET /search arrivals per minute
     [double]$DrainMin = 6,          # no new arrivals; lets in-flight requests finish (> service's 300 s Ollama timeout)
     [int]$Port = 8000,
+    [ValidateSet("http", "https")][string]$Scheme = "http",   # https + -Port 443 when the service is reached through a tunnel
     [int]$ResponseTimeoutMs = 330000,
     [string]$JMeterHome = $env:JMETER_HOME,
     [string]$OutDir = "",           # default results\jtl; point elsewhere for a plumbing check
@@ -46,7 +47,7 @@ $plan = Join-Path $PSScriptRoot "triage_load.jmx"
 $jtl = Join-Path $outDir "$runId.jtl"
 $propsFile = Join-Path $outDir "$runId.properties"
 $metaFile = Join-Path $outDir "$runId.meta.json"
-$baseUrl = "http://${TargetHost}:$Port"
+$baseUrl = "${Scheme}://${TargetHost}:$Port"
 
 if (-not $JMeterHome) { throw "Set JMETER_HOME or pass -JMeterHome (the folder that contains bin\jmeter.bat)." }
 $jmeterBat = Join-Path $JMeterHome "bin\jmeter.bat"
@@ -101,6 +102,7 @@ if (-not $SkipWarmup) {
 
 # --- per-run properties: the exact JMeter configuration, kept as evidence --
 @"
+protocol=$Scheme
 host=$TargetHost
 port=$Port
 response_timeout_ms=$ResponseTimeoutMs
