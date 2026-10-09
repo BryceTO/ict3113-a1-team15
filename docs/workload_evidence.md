@@ -25,7 +25,7 @@ Bryan owns the workload model, the requirements derived from it, and the final p
 | `docs/workload_requirements_freeze_checklist.md` | Pre-benchmark freeze checklist | Complete |
 | `analysis/model_requirement_matrix.csv` | Fill-in matrix for post-test pass/fail interpretation | Template complete |
 | `docs/results_interpretation_template.md` | Slide 11 interpretation template | Template complete |
-| `docs/slide_3_4_bryan_content.md` | Draft slide content for Bryan's sections | Complete |
+| `docs/workload_requirements_slide_content.md` | Draft slide content for Bryan's sections | Complete |
 | `scripts/analyze_ticket_lengths.py` | Reproducible script for ticket length summaries | Complete |
 | `scripts/calculate_workload_rates.py` | Reproducible script for workload-to-load calculations | Complete |
 

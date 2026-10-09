@@ -1,6 +1,6 @@
 # Bryan Slide Handoff
 
-Review deck: `slides/team15_bryan_draft.pptx`. This is a copy of the team deck supplied on 9 October 2026, not a replacement for Yuhao's master presentation. Rebuild it from the supplied source with `scripts/build_bryan_slides.ps1` and separate `-Source`, `-Output`, and optional `-PreviewDir` paths.
+Review deck: `slides/team15_workload_draft.pptx`. This is a copy of the team deck supplied on 9 October 2026, not a replacement for Yuhao's master presentation. Rebuild it from the supplied source with `scripts/build_workload_slides.ps1` and separate `-Source`, `-Output`, and optional `-PreviewDir` paths.
 
 ## Slides Updated
 
@@ -14,7 +14,7 @@ The text on Slides 1, 2 and 5-10 was not changed. This deck is Bryan's contribut
 ## Evidence and Review Points
 
 - Bryan's thresholds: `docs/requirements.md` on this branch, drafted before testing but not marked formally frozen.
-- Per-model assessment and caveats: `docs/model_results_bryan.md` and `analysis/model_requirement_matrix.csv`.
+- Per-model assessment and caveats: `docs/model_requirement_comparison.md` and `analysis/model_requirement_matrix.csv`.
 - Test and accuracy snapshot: `main@2f6745d`, especially `results/summary/load_configs.csv`, `results/summary/load_runs.csv`, `results/accuracy/accuracy_summary.csv`, and `results/accuracy/per_category_accuracy.csv`.
 - Golden set: `main@2f6745d:golden_set/golden_set.csv`.
 - The measured 60/h and 180/h runs support, but do not directly measure, latency at the modelled 9/h peak. Search p95 uses only 4 or 12 requests per run.
