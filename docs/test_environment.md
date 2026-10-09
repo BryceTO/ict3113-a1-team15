@@ -2,7 +2,7 @@
 
 Owner: Performance Testing Lead, with the Service Lead
 
-The same two machines were used for every reported run. Items still marked `TBD` can only be read off the service host.
+The same two machines were used for every reported run.
 
 ## Machines
 
@@ -11,10 +11,10 @@ The same two machines were used for every reported run. Items still marked `TBD`
 | Owner | Model & Accuracy Lead | Performance Testing Lead |
 | CPU | Intel Core Ultra 7 155H, 16 cores / 22 threads | Intel Core i5-1235U, 10 cores / 12 threads |
 | Memory | 16 GB (15.6 GB usable) | 16 GB (15.6 GB usable) |
-| Operating system | Windows, 64-bit (edition TBD) | Windows 11 Home |
-| Software | Docker Desktop TBD, Ollama image 0.35.0, CPU only | Apache JMeter 5.6.3, Java 8 |
-| Docker CPU / memory limit | TBD | not applicable |
-| Power | TBD (mains, power plan) | Mixed: on battery for some runs and plugged in for others. Power mode: Best Power Efficiency |
+| Operating system | Windows 11 Home, version 25H2, 64-bit | Windows 11 Home |
+| Software | Docker Desktop 4.48.0, Docker Engine 28.5.1, Docker Compose 2.40.0, Ollama image 0.35.0, CPU only | Apache JMeter 5.6.3, Java 8 |
+| Docker CPU / memory limit | 22 logical CPUs / 9.713 GiB available to Docker (WSL 2 backend) | not applicable |
+| Power | Mixed: on battery for some runs and plugged in for others. Power mode: Best Power Efficiency | Mixed: on battery for some runs and plugged in for others. Power mode: Best Power Efficiency |
 
 ## Network
 
