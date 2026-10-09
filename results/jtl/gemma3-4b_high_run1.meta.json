@@ -1,0 +1,24 @@
+{
+    "run_id":  "gemma3-4b_high_run1",
+    "model":  "gemma3:4b",
+    "scenario":  "high",
+    "run":  1,
+    "target":  "http://100.74.120.43:8000",
+    "post_rate_per_min":  3,
+    "step_rates_per_min":  [
+
+                           ],
+    "step_min":  10,
+    "search_rate_per_min":  0.6,
+    "arrival_window_min":  20,
+    "drain_min":  6,
+    "schedule":  "rate(3/min) random_arrivals(20 min) rate(3/min) pause(6 min)",
+    "search_schedule":  "rate(0.6/min) random_arrivals(20 min) rate(0.6/min) pause(6 min)",
+    "warmup":  {
+                   "request_id":  "0431bdd3-f8b9-49f4-8f92-57ee49e645d5",
+                   "row_id":  15999,
+                   "elapsed_ms":  26163
+               },
+    "jmeter_started_ms":  1791509478163,
+    "jmeter_finished_ms":  1791511101536
+}

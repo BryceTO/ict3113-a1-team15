@@ -4,7 +4,7 @@ For every results/jtl/<RUN_ID>.jtl it reads <RUN_ID>.meta.json (written by
 jmeter/run_load.ps1) and results/logs/<RUN_ID>.log (written by the service), then writes:
 
     results/summary/load_runs.csv        one row per run and endpoint
-    results/summary/load_configs.csv     mean and spread across the runs of a configuration
+    results/summary/load_configs.csv     mean and spread across the reconciled runs of a configuration
     results/summary/timeline/<RUN_ID>.csv   per-minute arrivals, completions, backlog, latency
     results/summary/stress_steps.csv     per-step figures for runs made with -StepRates
 
@@ -64,6 +64,19 @@ def read_log(path):
     return entries
 
 
+def canonical(run_id):
+    """Some runs were started with the model tag's ':' left in RUN_ID (gemma3:4b_...), which
+    Windows stores in the file name as U+F03A. Compare run IDs with both read as '-'."""
+    return run_id.replace(":", "-").replace("", "-")
+
+
+def find_log(log_dir, run_id):
+    for path in sorted(log_dir.glob("*.log")):
+        if canonical(path.stem) == run_id:
+            return path
+    return log_dir / f"{run_id}.log"
+
+
 def endpoint_stats(samples, start_ms, window_min):
     elapsed = [s["elapsed"] for s in samples]
     ok = sum(s["ok"] for s in samples)
@@ -90,7 +103,7 @@ def reconcile(samples, log_path, endpoint, run_id, warmup_id):
     by_id = {e["request_id"]: e for e in entries}
     if len(entries) != len(samples):
         notes.append(f"log has {len(entries)} lines, jtl has {len(samples)} samples")
-    wrong_run = sum(e.get("run_id") != run_id for e in entries)
+    wrong_run = sum(canonical(e.get("run_id", "")) != run_id for e in entries)
     if wrong_run:
         notes.append(f"{wrong_run} log lines carry a different run_id")
     no_id = sum(s["request_id"] not in by_id for s in samples)
@@ -101,6 +114,7 @@ def reconcile(samples, log_path, endpoint, run_id, warmup_id):
     if status_diff:
         notes.append(f"{status_diff} samples differ in status code")
     out = {"reconciled": "no" if notes else "yes", "log_lines": len(entries), "notes": "; ".join(notes)}
+    out["log_run_id"] = "|".join(sorted({e.get("run_id", "") for e in entries}))
     if matched:
         # time the request spent outside the service: network plus waiting to be accepted
         out["median_outside_service_ms"] = round(statistics.median(s["elapsed"] - e["latency_ms"] for s, e in matched), 1)
@@ -202,7 +216,7 @@ def main():
                 continue
             row = {"run_id": run_id, "config": re.sub(r"_run\d+$", "", run_id), "endpoint": endpoint}
             row.update(endpoint_stats(subset, start_ms, meta.get("arrival_window_min", 0)))
-            row.update(reconcile(subset, log_dir / f"{run_id}.log", endpoint, run_id, warmup_id))
+            row.update(reconcile(subset, find_log(log_dir, run_id), endpoint, run_id, warmup_id))
             run_rows.append(row)
         posts = [s for s in samples if s["label"] == "POST /tickets"]
         if posts:
@@ -214,8 +228,11 @@ def main():
         raise SystemExit(f"no .jtl files with samples in {jtl_dir}")
 
     groups = defaultdict(list)
+    # a run that does not reconcile with its service log is kept on file but never averaged
+    unreconciled = sorted({r["run_id"] for r in run_rows if r["reconciled"] != "yes"})
     for row in run_rows:
-        groups[(row["config"], row["endpoint"])].append(row)
+        if row["run_id"] not in unreconciled:
+            groups[(row["config"], row["endpoint"])].append(row)
     config_rows = []
     for (config, endpoint), rows in groups.items():
         out = {"config": config, "endpoint": endpoint, "runs": len(rows), "all_reconciled": all(r["reconciled"] == "yes" for r in rows)}
@@ -237,8 +254,10 @@ def main():
     for r in run_rows:
         flag = r["reconciled"] + (f" ({r['notes']})" if r.get("notes") else "")
         print(f"| {r['run_id']} | {r['endpoint']} | {r['samples']} | {r['p50_ms']} | {r['p95_ms']} | {r['p99_ms']} | {r['throughput_per_min']} | {r['error_rate_pct']} | {flag} |")
+    for run_id in unreconciled:
+        print(f"EXCLUDED from load_configs.csv (not reconciled): {run_id}")
     for r in config_rows:
-        if r["runs"] != 3:
+        if r["runs"] != 3 and not r["config"].endswith("_stress"):
             print(f"WARNING: {r['config']} [{r['endpoint']}] has {r['runs']} run(s); the brief requires 3.")
     print(f"\nwrote {out_dir}")
 

@@ -1,0 +1,24 @@
+{
+    "run_id":  "llama3.2-1b_stretch_run1",
+    "model":  "llama3.2:1b",
+    "scenario":  "stretch",
+    "run":  1,
+    "target":  "https://lkqk7sfx-8000.asse.devtunnels.ms:443",
+    "post_rate_per_min":  1,
+    "step_rates_per_min":  [
+
+                           ],
+    "step_min":  10,
+    "search_rate_per_min":  0.2,
+    "arrival_window_min":  20,
+    "drain_min":  6,
+    "schedule":  "rate(1/min) random_arrivals(20 min) rate(1/min) pause(6 min)",
+    "search_schedule":  "rate(0.2/min) random_arrivals(20 min) rate(0.2/min) pause(6 min)",
+    "warmup":  {
+                   "request_id":  "c15b6fab-fcae-4a6e-9c43-b135a8395022",
+                   "row_id":  15999,
+                   "elapsed_ms":  4892
+               },
+    "jmeter_started_ms":  1791450708365,
+    "jmeter_finished_ms":  1791452331789
+}

@@ -1,0 +1,24 @@
+{
+    "run_id":  "mistral-7b-instruct_stretch_run3",
+    "model":  "mistral:7b-instruct",
+    "scenario":  "stretch",
+    "run":  3,
+    "target":  "http://100.74.120.43:8000",
+    "post_rate_per_min":  1,
+    "step_rates_per_min":  [
+
+                           ],
+    "step_min":  10,
+    "search_rate_per_min":  0.2,
+    "arrival_window_min":  20,
+    "drain_min":  6,
+    "schedule":  "rate(1/min) random_arrivals(20 min) rate(1/min) pause(6 min)",
+    "search_schedule":  "rate(0.2/min) random_arrivals(20 min) rate(0.2/min) pause(6 min)",
+    "warmup":  {
+                   "request_id":  "a08d5b8a-94db-4e19-9ef6-b64e8ba8aea1",
+                   "row_id":  15999,
+                   "elapsed_ms":  86480
+               },
+    "jmeter_started_ms":  1791523796257,
+    "jmeter_finished_ms":  1791525418029
+}

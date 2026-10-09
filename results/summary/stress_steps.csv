@@ -1,0 +1,7 @@
+run_id,step,target_rate_per_min,arrivals,arrival_rate_per_min,completion_rate_per_min,errors_of_arrivals,backlog_start,backlog_end,p50_ms,p95_ms,max_ms,queue_growing
+gemma3-4b_stress_run1,1,2,20,2.0,2.0,0,0,0,4008,9022,9094,no
+gemma3-4b_stress_run1,2,4,39,3.9,3.9,0,0,0,6290,10981,13216,no
+gemma3-4b_stress_run1,3,6,61,6.1,6.0,0,0,1,6331,10673,13024,no
+gemma3-4b_stress_run1,4,8,78,7.8,7.9,1,1,0,9314,33881,61427,no
+gemma3-4b_stress_run1,5,10,102,10.2,9.9,0,0,3,27671,49286,54430,no
+gemma3-4b_stress_run1,6,12,120,12.0,9.5,17,3,28,88021,217601,249080,yes

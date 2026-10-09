@@ -1,0 +1,25 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect,"row_id","request_id"
+1791450718983,3541,POST /tickets,200,OK,Complaint intake 1-1,text,true,,1942,1032,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,3541,0,1601,15000,5cb4eb2f-2ead-4732-9f0a-fd24c5ea27b3
+1791450850385,1563,POST /tickets,200,OK,Complaint intake 1-2,text,true,,2053,821,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1563,0,59,15001,d1f03552-7412-41f2-81ea-4b78b3a4c65d
+1791450878935,1686,POST /tickets,200,OK,Complaint intake 1-3,text,true,,2053,455,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1686,0,36,15002,c63bc39e-8613-4245-b69c-a408f01fbc18
+1791450899318,1884,POST /tickets,200,OK,Complaint intake 1-4,text,true,,1949,966,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1883,0,42,15003,aa9e6db2-85a0-4f64-8867-e55213b11c71
+1791450960483,1955,POST /tickets,200,OK,Complaint intake 1-5,text,true,,1949,701,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1955,0,49,15004,24c38d37-9772-45f4-99b2-07b0bdf263bc
+1791451064088,2593,POST /tickets,200,OK,Complaint intake 1-6,text,true,,2054,1301,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,2593,0,59,15005,2128ec41-5ab6-4169-b9f6-6bb6f9a7f42c
+1791451110489,1658,POST /tickets,200,OK,Complaint intake 1-7,text,true,,1949,543,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1658,0,45,15006,5d15f2e0-f6e8-454f-b7e5-5f4d0ffb26ac
+1791451128244,2950,POST /tickets,200,OK,Complaint intake 1-8,text,true,,1949,1939,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,2950,0,34,15007,6ee9d157-ab0e-4a4e-988e-1c3fb631fbf3
+1791451187832,1490,POST /tickets,200,OK,Complaint intake 1-10,text,true,,2053,625,2,2,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1490,0,34,15009,39456108-ab03-4be2-978b-4b8ce4a7d390
+1791451203319,1502,POST /tickets,200,OK,Complaint intake 1-11,text,true,,1949,438,2,2,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1501,0,64,15010,9dd84499-1358-4a4d-8f32-3e6d77d2064e
+1791451165061,100173,POST /tickets,504,Gateway Timeout,Complaint intake 1-9,,false,,1899,1102,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,100173,0,49,15008,NA
+1791451331291,299,GET /search,200,OK,Agent searches 2-1,text,true,,4090,191,1,2,https://lkqk7sfx-8000.asse.devtunnels.ms/search?q=credit+report,299,0,57,null,06439b56-6004-4327-b4f4-a7df1b78ed2e
+1791451319031,100212,POST /tickets,504,Gateway Timeout,Complaint intake 1-12,,false,,1899,890,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,100212,0,60,15011,NA
+1791451503105,2006,POST /tickets,200,OK,Complaint intake 1-13,text,true,,1949,957,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,2006,0,40,15012,aba26dfb-c197-4ad5-9e70-a499d18fa516
+1791451563338,393,GET /search,200,OK,Agent searches 2-2,text,true,,1914,190,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/search?q=late+payment,393,0,41,null,0fbc80f5-84a7-4b3c-b1ae-d03979cc2873
+1791451588281,1562,POST /tickets,200,OK,Complaint intake 1-14,text,true,,1949,475,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1562,0,25,15013,a2b7a6e8-ae75-4061-b289-ece7ca99825c
+1791451604479,418,GET /search,200,OK,Agent searches 2-3,text,true,,1910,186,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/search?q=mortgage,418,0,33,null,03218f00-bb0e-46b7-89dd-90d1b9a2c445
+1791451635864,2517,POST /tickets,200,OK,Complaint intake 1-15,text,true,,1949,1578,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,2516,0,52,15014,23d2f9b9-603a-4e65-a863-629239b03dac
+1791451697247,425,GET /search,200,OK,Agent searches 2-4,text,true,,1908,184,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/search?q=escrow,425,0,66,null,6c52e598-a275-4f17-9d2d-3c9c65267f4e
+1791451835720,1878,POST /tickets,200,OK,Complaint intake 1-16,text,true,,1949,892,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1878,0,47,15015,a418145c-28ae-495f-8d2c-d2977ea28355
+1791451839059,2668,POST /tickets,200,OK,Complaint intake 1-17,text,true,,1949,1820,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,2668,0,24,15016,7fe0158e-ebc9-4ceb-8820-c0a4043d681f
+1791451847856,1924,POST /tickets,200,OK,Complaint intake 1-18,text,true,,1949,1136,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1924,0,27,15017,70a7a1b0-c14a-43bb-9d98-3da04feda392
+1791451867669,1523,POST /tickets,200,OK,Complaint intake 1-19,text,true,,1949,615,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,1523,0,41,15018,fb1a37ed-47e0-4940-9c8b-5f7dd1a1dd36
+1791451872543,100161,POST /tickets,504,Gateway Timeout,Complaint intake 1-20,,false,,1899,769,1,1,https://lkqk7sfx-8000.asse.devtunnels.ms/tickets,100161,0,26,15019,NA
