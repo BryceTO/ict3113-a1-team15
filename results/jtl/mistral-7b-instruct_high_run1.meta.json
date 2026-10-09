@@ -1,0 +1,24 @@
+{
+    "run_id":  "mistral-7b-instruct_high_run1",
+    "model":  "mistral:7b-instruct",
+    "scenario":  "high",
+    "run":  1,
+    "target":  "http://100.74.120.43:8000",
+    "post_rate_per_min":  3,
+    "step_rates_per_min":  [
+
+                           ],
+    "step_min":  10,
+    "search_rate_per_min":  0.6,
+    "arrival_window_min":  20,
+    "drain_min":  6,
+    "schedule":  "rate(3/min) random_arrivals(20 min) rate(3/min) pause(6 min)",
+    "search_schedule":  "rate(0.6/min) random_arrivals(20 min) rate(0.6/min) pause(6 min)",
+    "warmup":  {
+                   "request_id":  "64ad8afa-457f-4573-9d6d-4b13e07ac124",
+                   "row_id":  15999,
+                   "elapsed_ms":  30270
+               },
+    "jmeter_started_ms":  1791525704219,
+    "jmeter_finished_ms":  1791527326072
+}

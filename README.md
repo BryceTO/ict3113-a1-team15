@@ -60,19 +60,21 @@ POST /tickets
 
 Ollama runs with `OLLAMA_NUM_PARALLEL=1` (one inference at a time) and `OLLAMA_MAX_QUEUE=512`. This is part of the baseline. Do not change it in Assignment 1.
 
-Run naming convention: `<model>_<scenario>_run<N>`, for example `llama3.2-1b_peak_run1`.
+Run naming convention: `<model>_<scenario>_run<N>`, for example `llama3.2-1b_stretch_run1`. The scenarios are `stretch`, `high`, `stress` and `accuracy`. In `RUN_ID` the model tag's `:` is written as `-` (`gemma3-4b_...`, not `gemma3:4b_...`), because the `RUN_ID` becomes a file name.
 
-- Mac/Linux: `MODEL=llama3.2:1b RUN_ID=llama3.2-1b_peak_run1 docker compose up -d`
-- PowerShell: `$env:MODEL="llama3.2:1b"; $env:RUN_ID="llama3.2-1b_peak_run1"; docker compose up -d`
+- Mac/Linux: `MODEL=llama3.2:1b RUN_ID=llama3.2-1b_stretch_run1 docker compose up -d`
+- PowerShell: `$env:MODEL="llama3.2:1b"; $env:RUN_ID="llama3.2-1b_stretch_run1"; docker compose up -d`
 
 Changing `MODEL` or `RUN_ID` recreates the triage container. A new `RUN_ID` starts with an empty database, so no volume reset is needed.
 
-### Before each official run
-1. Start the service with the run's `MODEL` and `RUN_ID`.
-2. Send **one warm-up** `POST /tickets` to load the model into memory (the first call takes ~10 s). The warm-up stays in the log. Exclude it from results and note its `request_id`.
-3. Start JMeter from the **separate** load-generator machine against `http://<service-host-ip>:8000`. On Windows, allow inbound TCP 8000 through the firewall.
-4. After the run, check that the count of `POST /tickets` lines in the log (minus the warm-up) matches the `.jtl` sample count.
-5. Commit the log and the `.jtl` together.
+### Load and stress runs
+The full procedure is in `docs/test_playbook.md`. In short, for each run:
+1. **Service host:** start the service with the run's `MODEL` and `RUN_ID`.
+2. **Load generator (a separate machine):** start the run with `jmeter/run_load.ps1`, pointing `-TargetHost` at the service host. The two machines were connected through Tailscale (see `docs/test_environment.md`).
+3. The script sends **one warm-up** `POST /tickets` to load the model, then runs JMeter. The warm-up stays in the service log and is excluded from results. Its `request_id` is saved in `results/jtl/<RUN_ID>.meta.json`.
+4. **Service host:** commit and push `results/logs/<RUN_ID>.log`.
+5. **Load generator:** run `py scripts\summarize_load.py`. It checks every `.jtl` against its service log by `request_id` and writes `results/summary/`. A run that does not reconcile is kept but not reported.
+6. Commit the `.jtl`, its `.properties` and `.meta.json`, and `results/summary/`.
 
 ### Stop
 ```
@@ -99,15 +101,17 @@ Logs are committed to Git as evidence. Do not delete or edit them.
 ```
 docker-compose.yml     Service + Ollama (CPU only)
 service/               Triage service source and Dockerfile
-results/logs/          Service request logs
-results/jtl/           Raw JMeter result files (every reported run)
-jmeter/                JMeter test plans
-data/                  Team 15 rows and golden test set
+results/logs/          Service request logs, one per run
+results/jtl/           Raw JMeter result files, with each run's settings (.properties, .meta.json)
+results/summary/       Load and stress figures calculated from the .jtl files and logs
+results/accuracy/      Golden-set predictions, accuracy and confusion matrices
+jmeter/                JMeter test plan, run script and search terms
+golden_set/            Golden test set and labelling evidence
 predictions/           Prediction record
-scripts/               Sampling, agreement and accuracy scripts
-docs/                  Labelling protocol, workload model, model tags and digests
+scripts/               Feeder, load summary and accuracy scripts
+docs/                  Candidate models, test playbook and test environment
 ```
-Folders are added as the work is done.
+The Team 15 dataset rows are not in the repository. Each tester places the extract at `context/team15_rows.csv`, which is git-ignored, and builds the JMeter feeder from it with `py scripts\make_feeder.py`.
 
 ## Evidence rules
 - The golden test set and the prediction record are committed **before** the first benchmark run. Do not edit them afterwards.

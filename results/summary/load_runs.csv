@@ -26,5 +26,15 @@ llama3.2-1b_stretch_run3,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1417,3036,34
 llama3.2-1b_stretch_run3,llama3.2-1b_stretch,GET /search,4,0,0.0,56,126,126,89.0,126,0.2,yes,4,,llama3.2-1b_stretch_run3,83.2,,,,
 llama3.2-1b_stretch_run4,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1430,3598,4395,1780.0,4395,1.0,yes,20,,llama3.2-1b_stretch_run4,166.9,1587.0,llama3.2:1b,0,0
 llama3.2-1b_stretch_run4,llama3.2-1b_stretch,GET /search,4,0,0.0,61,77,77,62.8,77,0.2,yes,4,,llama3.2-1b_stretch_run4,61.4,,,,
+mistral-7b-instruct_high_run1,mistral-7b-instruct_high,POST /tickets,60,0,0.0,9470,23548,26488,10950.3,26488,2.983,yes,60,,mistral-7b-instruct_high_run1,27.7,10905.3,mistral:7b-instruct,0,0
+mistral-7b-instruct_high_run1,mistral-7b-instruct_high,GET /search,12,0,0.0,39,108,108,50.1,108,0.6,yes,12,,mistral-7b-instruct_high_run1,40.7,,,,
+mistral-7b-instruct_high_run2,mistral-7b-instruct_high,POST /tickets,60,0,0.0,25375,49840,59340,26339.4,59340,2.869,yes,60,,mistral-7b-instruct_high_run2,52.7,26248.6,mistral:7b-instruct,0,0
+mistral-7b-instruct_high_run2,mistral-7b-instruct_high,GET /search,12,0,0.0,47,134,134,56.7,134,0.6,yes,12,,mistral-7b-instruct_high_run2,37.9,,,,
+mistral-7b-instruct_high_run3,mistral-7b-instruct_high,POST /tickets,60,0,0.0,11124,37579,46031,13163.8,46031,2.979,yes,60,,mistral-7b-instruct_high_run3,85.1,13050.3,mistral:7b-instruct,0,0
+mistral-7b-instruct_high_run3,mistral-7b-instruct_high,GET /search,12,0,0.0,121,233,233,112.7,233,0.6,yes,12,,mistral-7b-instruct_high_run3,112.0,,,,
 mistral-7b-instruct_stretch_run1,mistral-7b-instruct_stretch,POST /tickets,20,0,0.0,5793,20980,27908,9072.5,27908,1.0,yes,20,,mistral-7b-instruct_stretch_run1,34.5,9001.1,mistral:7b-instruct,0,0
 mistral-7b-instruct_stretch_run1,mistral-7b-instruct_stretch,GET /search,4,0,0.0,40,63,63,44.2,63,0.2,yes,4,,mistral-7b-instruct_stretch_run1,32.6,,,,
+mistral-7b-instruct_stretch_run2,mistral-7b-instruct_stretch,POST /tickets,20,0,0.0,6274,17033,19095,8237.0,19095,0.996,yes,20,,mistral-7b-instruct_stretch_run2,36.0,8118.6,mistral:7b-instruct,0,0
+mistral-7b-instruct_stretch_run2,mistral-7b-instruct_stretch,GET /search,4,0,0.0,34,47,47,36.8,47,0.2,yes,4,,mistral-7b-instruct_stretch_run2,30.8,,,,
+mistral-7b-instruct_stretch_run3,mistral-7b-instruct_stretch,POST /tickets,20,0,0.0,5896,14530,15047,7336.3,15047,0.996,yes,20,,mistral-7b-instruct_stretch_run3,32.0,7232.8,mistral:7b-instruct,0,0
+mistral-7b-instruct_stretch_run3,mistral-7b-instruct_stretch,GET /search,4,0,0.0,80,1074,1074,321.2,1074,0.2,yes,4,,mistral-7b-instruct_stretch_run3,71.4,,,,
