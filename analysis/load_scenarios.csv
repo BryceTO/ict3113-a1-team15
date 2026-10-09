@@ -1,0 +1,5 @@
+scenario,purpose,post_per_hour,post_per_minute,search_per_hour,endpoint_mix
+normal,Typical complaint intake,3,0.05,0,Mostly POST /tickets
+peak,Main requirement condition,9,0.15,2,POST /tickets plus GET /search
+stretch,Headroom demonstration,60,1.0,12,Same endpoint mix as peak
+stress,Find system limit,,,,Increase POST /tickets until failure or unbounded latency

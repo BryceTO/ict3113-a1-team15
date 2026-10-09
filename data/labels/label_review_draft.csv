@@ -1,0 +1,71 @@
+row,your_label,pair,notes
+15000,Credit reporting,A+B,
+15001,Credit reporting,A+B,
+15002,Money transfer or service,A+B,Extortion payments sent through payment services
+15003,Money transfer or service,A+B,Cash App account closure
+15004,Consumer loan,A+B,Car lender seeks vehicle; account and title dispute
+15005,Money transfer or service,A+B,Western Union payment transmission dispute
+15006,Consumer loan,A+B,Student loan servicing; no student-loan category available
+15007,Credit card,A+B,Apple Card payment and disputed balance
+15008,Bank account or service,A+B,Unauthorized debits from checking by Dave; possible consumer-loan overlap
+15009,Bank account or service,A+B,Checking account closure and debit cards
+15010,Credit reporting,A+B,Unauthorized hard inquiry
+15011,Credit card,A+B,Unwanted store credit card application
+15012,Debt collection,A+B,Collector threatened suit without validating debt
+15013,Bank account or service,A+B,Unauthorized checking charges and Dave debit card
+15014,Credit reporting,A+B,Inaccurate personal information on credit file
+15015,Money transfer or service,A+B,Cash App fraud and dispute handling
+15016,Mortgage,A+B,Modification documents and payment demands
+15017,Debt collection,A+B,Collector validation dispute with credit-reporting effects
+15018,Mortgage,B+C,Foreclosure during approved short sale
+15019,Credit reporting,B+C,Incorrect credit bureau entries
+15020,Mortgage,B+C,Loan modification denial after trial payments
+15021,Money transfer or service,B+C,PayPal account limit and withheld funds
+15022,Money transfer or service,B+C,Scam wire transfer and recall request
+15023,Credit reporting,B+C,Identity-theft accounts to remove from credit report
+15024,Money transfer or service,B+C,Cash App fraud and dispute handling
+15025,Credit card,B+C,Credit card marketing and application denial
+15026,Bank account or service,B+C,Checking or business account hold
+15027,Mortgage,B+C,Predatory home loan and foreclosure
+15028,Mortgage,B+C,Deferred principal and mortgage modification
+15029,Mortgage,B+C,Second mortgage transfer and servicing
+15030,Bank account or service,B+C,Bank bill-pay duplicate payments
+15031,Money transfer or service,B+C,Unidentified account service holds funds; product unclear
+15032,Credit reporting,B+C,Repossession entry disputed with credit bureaus
+15033,Consumer loan,B+C,Unauthorized payday loan and repeat debits
+15034,Money transfer or service,B+C,Scam wire transfer to fraudulent account
+15035,Credit reporting,B+C,Disputed canceled debt still reported as open collection
+15124,Credit card,B+D,Store credit card return and billing dispute
+15125,Mortgage,B+D,Mortgage servicer foreclosure and modification dispute
+15126,Mortgage,B+D,PMI escrow and appraisal dispute
+15127,Credit reporting,B+D,Late-payment entry disputed; underlying product unspecified
+15128,Debt collection,B+D,Debt buyer validation and lawsuit tactics
+15129,Credit card,B+D,Missing statements and late charges on card
+15130,Mortgage,B+D,Delayed mortgage modification review
+15131,Mortgage,B+D,Forbearance and missed mortgage payments
+15132,Consumer loan,B+D,Student loan forgiveness service; no student-loan category available
+15133,Debt collection,B+D,Debt validation and cease-collection request
+15134,Money transfer or service,B+D,Cash App fraud and dispute handling
+15135,Credit reporting,B+D,Medical collections reported inaccurately by bureaus
+15136,Credit card,B+D,Card issuer asked to reverse late reporting
+15137,Consumer loan,B+D,Student PLUS loan servicing; no student-loan category available
+15138,Bank account or service,B+D,Certificate of deposit renewal and withdrawal fee
+15139,Bank account or service,B+D,Checking and savings closure with missing funds
+15140,Credit reporting,B+D,FCRA complaint about inaccurate report data
+15141,Consumer loan,B+E,Student loan balance disputed with AES; credit-reporting effects
+15142,Debt collection,B+E,Debt collector cease-communication request
+15143,Money transfer or service,B+E,Cash App account lock and balance refund
+15144,Credit reporting,B+E,Experian reinvestigation dispute
+15145,Credit reporting,B+E,Unverified credit bureau accounts
+15146,Debt collection,B+E,Collector presented allegedly forged debt proof
+15147,Mortgage,B+E,Mortgage payoff information fee dispute
+15148,Debt collection,B+E,Collector calls and failure to validate debt
+15149,Credit card,B+E,Store card issuer charge-off reporting and settlement dispute
+15150,Credit reporting,B+E,Inaccurate credit report information
+15151,Money transfer or service,B+E,PayPal refund to closed card not recovered
+15152,Money transfer or service,B+E,Cash App purchase dispute for undelivered goods
+15153,Mortgage,B+E,Mortgage escrow property-tax refund delay
+15154,Credit reporting,B+E,ChexSystems consumer report lists unknown bank applications
+15155,Consumer loan,B+E,Possible auto-loan lien on vehicle title; loan not confirmed
+15156,Credit card,B+E,Unauthorized Wells Fargo card and debt
+15157,Credit card,B+E,Unauthorized card charges account replacement and fee

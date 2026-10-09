@@ -181,7 +181,9 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
 # Local assignment context and source extracts
 context/
+
 # Built from context/team15_rows.csv by scripts/make_feeder.py
 jmeter/feeder.tsv
