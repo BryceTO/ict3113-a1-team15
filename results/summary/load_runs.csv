@@ -1,15 +1,30 @@
-run_id,config,endpoint,samples,errors,error_rate_pct,p50_ms,p95_ms,p99_ms,mean_ms,max_ms,throughput_per_min,reconciled,log_lines,notes,median_outside_service_ms,mean_ollama_ms,models,model_reloads,unclassified
-llama3.2-1b_high_run1,llama3.2-1b_high,POST /tickets,60,0,0.0,1674,3247,3957,1952.2,3957,2.996,yes,60,,174.8,1754.1,llama3.2:1b,0,0
-llama3.2-1b_high_run1,llama3.2-1b_high,GET /search,12,0,0.0,95,153,153,92.9,153,0.6,yes,12,,98.0,,,,
-llama3.2-1b_high_run2,llama3.2-1b_high,POST /tickets,60,0,0.0,1667,3273,3714,2006.2,3714,3.0,yes,60,,176.8,1815.9,llama3.2:1b,0,0
-llama3.2-1b_high_run2,llama3.2-1b_high,GET /search,12,0,0.0,52,143,143,81.1,143,0.6,yes,12,,57.8,,,,
-llama3.2-1b_high_run3,llama3.2-1b_high,POST /tickets,60,0,0.0,2864,7854,12051,3579.1,12051,2.991,yes,60,,204.0,3318.2,llama3.2:1b,0,0
-llama3.2-1b_high_run3,llama3.2-1b_high,GET /search,12,0,0.0,59,777,777,115.8,777,0.6,yes,12,,55.8,,,,
-llama3.2-1b_stretch_run1,llama3.2-1b_stretch,POST /tickets,20,3,15.0,1924,100173,100212,16772.3,100212,0.807,no,17,"log has 17 lines, jtl has 20 samples; 3 jtl samples have no matching request_id in the log",403.7,1540.2,llama3.2:1b,0,0
-llama3.2-1b_stretch_run1,llama3.2-1b_stretch,GET /search,4,0,0.0,393,425,425,383.8,425,0.2,yes,4,,404.3,,,,
-llama3.2-1b_stretch_run2,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1388,3091,3391,1648.0,3391,1.0,yes,20,,163.3,1450.4,llama3.2:1b,0,0
-llama3.2-1b_stretch_run2,llama3.2-1b_stretch,GET /search,4,0,0.0,111,199,199,135.0,199,0.2,yes,4,,112.3,,,,
-llama3.2-1b_stretch_run3,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1417,3036,3468,1656.3,3468,0.998,yes,20,,172.3,1455.2,llama3.2:1b,0,0
-llama3.2-1b_stretch_run3,llama3.2-1b_stretch,GET /search,4,0,0.0,56,126,126,89.0,126,0.2,yes,4,,83.2,,,,
-llama3.2-1b_stretch_run4,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1430,3598,4395,1780.0,4395,1.0,yes,20,,166.9,1587.0,llama3.2:1b,0,0
-llama3.2-1b_stretch_run4,llama3.2-1b_stretch,GET /search,4,0,0.0,61,77,77,62.8,77,0.2,yes,4,,61.4,,,,
+run_id,config,endpoint,samples,errors,error_rate_pct,p50_ms,p95_ms,p99_ms,mean_ms,max_ms,throughput_per_min,reconciled,log_lines,notes,log_run_id,median_outside_service_ms,mean_ollama_ms,models,model_reloads,unclassified
+gemma3-4b_high_run1,gemma3-4b_high,POST /tickets,60,0,0.0,5417,10338,16728,6211.9,16728,2.986,yes,60,,gemma3:4b_high_run1,46.8,6140.9,gemma3:4b,0,0
+gemma3-4b_high_run1,gemma3-4b_high,GET /search,12,0,0.0,35,64,64,39.8,64,0.6,yes,12,,gemma3:4b_high_run1,33.7,,,,
+gemma3-4b_high_run2,gemma3-4b_high,POST /tickets,60,0,0.0,5548,11605,13163,6218.2,13163,2.991,yes,60,,gemma3:4b_high_run2,62.5,6115.6,gemma3:4b,0,0
+gemma3-4b_high_run2,gemma3-4b_high,GET /search,12,0,0.0,37,237,237,56.2,237,0.6,yes,12,,gemma3:4b_high_run2,34.9,,,,
+gemma3-4b_high_run3,gemma3-4b_high,POST /tickets,60,0,0.0,4875,9689,12383,5714.9,12383,2.988,yes,60,,gemma3:4b_high_run3,49.5,5641.2,gemma3:4b,0,0
+gemma3-4b_high_run3,gemma3-4b_high,GET /search,12,0,0.0,34,111,111,46.8,111,0.6,yes,12,,gemma3:4b_high_run3,29.9,,,,
+gemma3-4b_stress_run1,gemma3-4b_stress,POST /tickets,420,18,4.29,18049,131517,222212,38432.9,249080,6.276,yes,420,,gemma3-4b_stress_run1,41.0,37106.0,gemma3:4b,15,0
+gemma3-4b_stretch_run1,gemma3-4b_stretch,POST /tickets,20,0,0.0,7708,14958,18905,8634.3,18905,1.0,yes,20,,gemma3:4b_stretch_run1,501.5,8073.5,gemma3:4b,0,0
+gemma3-4b_stretch_run1,gemma3-4b_stretch,GET /search,4,0,0.0,33,39,39,35.0,39,0.2,yes,4,,gemma3:4b_stretch_run1,29.5,,,,
+gemma3-4b_stretch_run2,gemma3-4b_stretch,POST /tickets,20,0,0.0,4027,6776,9824,4676.4,9824,1.0,yes,20,,gemma3:4b_stretch_run2,266.7,4365.8,gemma3:4b,0,0
+gemma3-4b_stretch_run2,gemma3-4b_stretch,GET /search,4,0,0.0,35,56,56,41.2,56,0.2,yes,4,,gemma3:4b_stretch_run2,33.3,,,,
+gemma3-4b_stretch_run3,gemma3-4b_stretch,POST /tickets,20,0,0.0,4038,6892,7723,4546.1,7723,0.996,yes,20,,gemma3:4b_stretch_run3,367.9,4180.9,gemma3:4b,0,0
+gemma3-4b_stretch_run3,gemma3-4b_stretch,GET /search,4,0,0.0,30,48,48,38.8,48,0.2,yes,4,,gemma3:4b_stretch_run3,33.3,,,,
+llama3.2-1b_high_run1,llama3.2-1b_high,POST /tickets,60,0,0.0,1674,3247,3957,1952.2,3957,2.996,yes,60,,llama3.2-1b_high_run1,174.8,1754.1,llama3.2:1b,0,0
+llama3.2-1b_high_run1,llama3.2-1b_high,GET /search,12,0,0.0,95,153,153,92.9,153,0.6,yes,12,,llama3.2-1b_high_run1,98.0,,,,
+llama3.2-1b_high_run2,llama3.2-1b_high,POST /tickets,60,0,0.0,1667,3273,3714,2006.2,3714,3.0,yes,60,,llama3.2-1b_high_run2,176.8,1815.9,llama3.2:1b,0,0
+llama3.2-1b_high_run2,llama3.2-1b_high,GET /search,12,0,0.0,52,143,143,81.1,143,0.6,yes,12,,llama3.2-1b_high_run2,57.8,,,,
+llama3.2-1b_high_run3,llama3.2-1b_high,POST /tickets,60,0,0.0,2864,7854,12051,3579.1,12051,2.991,yes,60,,llama3.2-1b_high_run3,204.0,3318.2,llama3.2:1b,0,0
+llama3.2-1b_high_run3,llama3.2-1b_high,GET /search,12,0,0.0,59,777,777,115.8,777,0.6,yes,12,,llama3.2-1b_high_run3,55.8,,,,
+llama3.2-1b_stretch_run1,llama3.2-1b_stretch,POST /tickets,20,3,15.0,1924,100173,100212,16772.3,100212,0.807,no,17,"log has 17 lines, jtl has 20 samples; 3 jtl samples have no matching request_id in the log",llama3.2-1b_stretch_run1,403.7,1540.2,llama3.2:1b,0,0
+llama3.2-1b_stretch_run1,llama3.2-1b_stretch,GET /search,4,0,0.0,393,425,425,383.8,425,0.2,yes,4,,llama3.2-1b_stretch_run1,404.3,,,,
+llama3.2-1b_stretch_run2,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1388,3091,3391,1648.0,3391,1.0,yes,20,,llama3.2-1b_stretch_run2,163.3,1450.4,llama3.2:1b,0,0
+llama3.2-1b_stretch_run2,llama3.2-1b_stretch,GET /search,4,0,0.0,111,199,199,135.0,199,0.2,yes,4,,llama3.2-1b_stretch_run2,112.3,,,,
+llama3.2-1b_stretch_run3,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1417,3036,3468,1656.3,3468,0.998,yes,20,,llama3.2-1b_stretch_run3,172.3,1455.2,llama3.2:1b,0,0
+llama3.2-1b_stretch_run3,llama3.2-1b_stretch,GET /search,4,0,0.0,56,126,126,89.0,126,0.2,yes,4,,llama3.2-1b_stretch_run3,83.2,,,,
+llama3.2-1b_stretch_run4,llama3.2-1b_stretch,POST /tickets,20,0,0.0,1430,3598,4395,1780.0,4395,1.0,yes,20,,llama3.2-1b_stretch_run4,166.9,1587.0,llama3.2:1b,0,0
+llama3.2-1b_stretch_run4,llama3.2-1b_stretch,GET /search,4,0,0.0,61,77,77,62.8,77,0.2,yes,4,,llama3.2-1b_stretch_run4,61.4,,,,
+mistral-7b-instruct_stretch_run1,mistral-7b-instruct_stretch,POST /tickets,20,0,0.0,5793,20980,27908,9072.5,27908,1.0,yes,20,,mistral-7b-instruct_stretch_run1,34.5,9001.1,mistral:7b-instruct,0,0
+mistral-7b-instruct_stretch_run1,mistral-7b-instruct_stretch,GET /search,4,0,0.0,40,63,63,44.2,63,0.2,yes,4,,mistral-7b-instruct_stretch_run1,32.6,,,,

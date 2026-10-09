@@ -1,0 +1,29 @@
+{
+    "run_id":  "gemma3-4b_stress_run1",
+    "model":  "gemma3:4b",
+    "scenario":  "stress",
+    "run":  1,
+    "target":  "http://100.74.120.43:8000",
+    "post_rate_per_min":  0,
+    "step_rates_per_min":  [
+                               2,
+                               4,
+                               6,
+                               8,
+                               10,
+                               12
+                           ],
+    "step_min":  10,
+    "search_rate_per_min":  0,
+    "arrival_window_min":  60,
+    "drain_min":  6,
+    "schedule":  "rate(2/min) random_arrivals(10 min) rate(2/min) rate(4/min) random_arrivals(10 min) rate(4/min) rate(6/min) random_arrivals(10 min) rate(6/min) rate(8/min) random_arrivals(10 min) rate(8/min) rate(10/min) random_arrivals(10 min) rate(10/min) rate(12/min) random_arrivals(10 min) rate(12/min) pause(6 min)",
+    "search_schedule":  "pause(1 s)",
+    "warmup":  {
+                   "request_id":  "e47531d2-589c-4f2f-8338-fe94279c8ffd",
+                   "row_id":  15999,
+                   "elapsed_ms":  15762
+               },
+    "jmeter_started_ms":  1791515014343,
+    "jmeter_finished_ms":  1791519037135
+}
