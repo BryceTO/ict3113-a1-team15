@@ -16,6 +16,11 @@ services:
       - "8000:8000"
     environment:
       MODEL: ${MODEL:-llama3.2:1b}
+      MODE: ${MODE:-single}                       # single | cascade
+      SMALL_MODEL: ${SMALL_MODEL:-}
+      LARGE_MODEL: ${LARGE_MODEL:-}
+      RULE: ${RULE:-}                             # category | length | confidence
+      RULE_SETTING: ${RULE_SETTING:-}
       RUN_ID: ${RUN_ID:-dev}
       NUM_CTX: ${NUM_CTX:-4096}
       KEEP_ALIVE: ${KEEP_ALIVE:-30m}
